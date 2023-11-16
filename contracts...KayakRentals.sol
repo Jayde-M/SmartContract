@@ -1,7 +1,6 @@
 pragma solidity >=0.8.0 <0.9.0;
 
-// Jayde Magee and Avrie White 
-
+// Jayde Magee and Avrie White
 contract KayakRental {
 
 address payable public owner;
@@ -15,6 +14,7 @@ address payable public owner;
         owner = payable(msg.sender);
         available = true;
         ratePerDay = 2 ether; //CUSTOMIZE
+        isDamaged = false;
 }
  modifier onlyOwner() {
         require(msg.sender == owner, "Must be contract owner to call this function");
@@ -43,6 +43,8 @@ modifier onlyIfNotDamaged() {
     function reportDamage() external onlyOwner {
         isDamaged = true;
         
+        // Emit DamageReported event
+        emit Log(msg.sender, "Reported damaged");
     }
 
          function updateRate(uint newRate) public onlyOwner {
